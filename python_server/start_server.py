@@ -102,8 +102,7 @@ async def async_main():
     # Parse command-line arguments
     args = parse_args()
     from application.logger import set_log_level
-    set_log_level('DEBUG')
-    # set_log_level(args.log_level)
+    set_log_level(args.log_level)
 
     # Set Chrome instance path if provided
     if args.chrome_path:

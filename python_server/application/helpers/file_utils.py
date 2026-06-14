@@ -1,15 +1,16 @@
 import mimetypes
 from pathlib import Path
 
+from application.logger import logger
 
 # 可选：如果需要更准确的检测，安装 python-magic
 try:
     import magic
     HAS_MAGIC = True
-    print("HAS_MAGIC=true")
+    logger.info("python-magic available for file detection")
 except ImportError:
     HAS_MAGIC = False
-    print("HAS_MAGIC=false")
+    logger.info("python-magic not available, using fallback detection")
 
 
 def get_file_type(file_path: Path):
@@ -22,13 +23,13 @@ def get_file_type(file_path: Path):
 
     # 检查文件是否存在
     if not file_path.exists():
-        print("not exists")
+        logger.warning(f"File not found: {file_path}")
         return ''
 
     # 尝试从文件扩展名获取
     file_ext = file_path.suffix
     if file_ext:
-        print(f"file_ext={file_ext}")
+        logger.debug(f"file_ext={file_ext}")
         return file_ext.lower().lstrip('.')
 
     # 使用 python-magic 库
@@ -40,8 +41,7 @@ def get_file_type(file_path: Path):
             if ext:
                 return ext
         except Exception as e:
-            print(e)
-            pass
+            logger.warning(f"Magic detection failed: {e}")
 
     # 使用 mimetypes 库
     try:
@@ -51,8 +51,7 @@ def get_file_type(file_path: Path):
             if ext:
                 return ext
     except Exception as e:
-        print(e)
-        pass
+        logger.warning(f"Mimetypes detection failed: {e}")
 
     # 第四层：文件头检测
     return _detect_by_header(file_path)
@@ -128,7 +127,7 @@ def _detect_by_header(file_path: Path) -> str:
                     return 'c'
                 else:
                     return 'txt'
-            except:
+            except Exception:
                 return 'txt'
     except Exception:
         pass

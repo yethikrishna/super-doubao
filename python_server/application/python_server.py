@@ -244,7 +244,7 @@ async def multipart_upload(cmd: MultipartUploadRequest = Body(...)):
     }
     """
     try:
-        print("1")
+        logger.debug("Starting multipart upload to S3")
         file_path = Path(cmd.file_path).resolve()
         if not file_path.exists():
             raise HTTPException(status_code=404, detail="File not found")
@@ -260,7 +260,7 @@ async def multipart_upload(cmd: MultipartUploadRequest = Body(...)):
                 detail=f"Number of presigned URLs ({len(cmd.presigned_urls)}) does not match expected parts ({expected_parts})"
             )
 
-        results = await upload_file_parts(str(file_path), cmd.presigned_urls, cmd.part_size)
+        results = await upload_file_parts(str(file_path), cmd.presigned_urls, cmd.part_size, max_concurrent=5)
 
         successful = sum(1 for r in results if r.success)
         failed = len(results) - successful
@@ -537,7 +537,7 @@ async def upload_local_file(
         try:
             if target_path.exists():
                 target_path.unlink()
-        except:
+        except Exception:
             pass
 
         if e.errno == errno.ENAMETOOLONG:
@@ -552,13 +552,13 @@ async def upload_local_file(
         try:
             if target_path.exists():
                 target_path.unlink()
-        except:
+        except Exception:
             pass
         raise HTTPException(status_code=500, detail=f"Failed to upload file: {str(e)}")
     finally:
         try:
             await file.close()
-        except:
+        except Exception:
             pass
 
 @ci_app.post("/text_editor")
@@ -599,10 +599,26 @@ async def text_editor_endpoint(cmd: TextEditorAction):
         ).model_dump()
 
 
+async def wait_for_port(host: str, port: int, timeout: float = 5.0) -> bool:
+    """Wait until a TCP port is accepting connections, or timeout expires."""
+    deadline = asyncio.get_event_loop().time() + timeout
+    while asyncio.get_event_loop().time() < deadline:
+        try:
+            _, writer = await asyncio.wait_for(
+                asyncio.open_connection(host, port), timeout=1.0
+            )
+            writer.close()
+            await writer.wait_closed()
+            return True
+        except Exception:
+            await asyncio.sleep(0.1)
+    return False
+
+
 @ci_app.get("/healthz")
 async def healthz():
-    wait_for_port("127.0.0.1", 9222)
-    """Health check endpoint."""
+    """Health check endpoint. Waits for Chrome debug port to be ready."""
+    await wait_for_port("127.0.0.1", 9222)
     return {"status": "ok"}
 
 

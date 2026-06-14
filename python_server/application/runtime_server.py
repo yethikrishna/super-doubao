@@ -69,7 +69,7 @@ async def getSandboxRuntime():
         
         # 获取已安装的Python包
         pip_list = exec_shell("pip3 list --format=json")
-        print("pip_list=" + pip_list)
+        logger.debug(f"pip_list={pip_list}")
         if pip_list:
             try:
                 packages = json.loads(pip_list)
