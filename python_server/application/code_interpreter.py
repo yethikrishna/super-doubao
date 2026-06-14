@@ -282,7 +282,7 @@ async def cancel_tasks_if_not_done(*tasks):
         task.cancel()
         try:
             await task
-        except:
+        except Exception:
             pass
 
 def get_result_from_async_queue(analyze_timeout_result_queue: asyncio.Queue) -> Optional[CodeAnalyzeResult]:

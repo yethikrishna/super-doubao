@@ -3,6 +3,8 @@ from typing import Dict, Set, Optional, cast
 import ast
 from pydantic import BaseModel
 
+from application.logger import logger
+
 from enum import Enum
 class StrEnum(str, Enum):
     """字符串枚举基类，成员值即为字符串本身"""
@@ -307,8 +309,8 @@ def static_analyze_code(code: str) -> Optional[CodeAnalyzeResult]:
     tree = parse_code_to_ast(code)
     graph = build_scope_graph(tree)
     reachable = compute_reachable_scopes(graph)
-    print(f"graph={graph}")
-    print(f"reachable={reachable}")
+    logger.debug(f"graph={graph}")
+    logger.debug(f"reachable={reachable}")
     return detect_timeout_patterns(graph, reachable, code)
 
 # 定义异步方法
