@@ -1,0 +1,238 @@
+# Instincts generated from https://github.com/yethikrishna/super-doubao
+# Generated: 2026-06-14T17:34:04.661Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: super-doubao-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/yethikrishna/super-doubao
+---
+
+# Super Doubao Commit Length
+
+## Action
+
+Write moderate-length commit messages (~68 characters)
+
+## Evidence
+
+- Average commit message length: 68 chars
+- Based on 1 commits
+
+---
+id: super-doubao-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/yethikrishna/super-doubao
+---
+
+# Super Doubao Naming Files
+
+## Action
+
+Use snake_case naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: snake_case
+
+---
+id: super-doubao-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/yethikrishna/super-doubao
+---
+
+# Super Doubao Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: super-doubao-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/yethikrishna/super-doubao
+---
+
+# Super Doubao Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: super-doubao-instinct-file-naming
+trigger: "When creating a new Python file"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: yethikrishna/super-doubao
+---
+
+# Super Doubao Instinct File Naming
+
+## Action
+
+Name the file using snake_case
+
+## Evidence
+
+- Pattern in files: python_server/
+
+---
+id: super-doubao-instinct-function-naming
+trigger: "When defining a new function"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: yethikrishna/super-doubao
+---
+
+# Super Doubao Instinct Function Naming
+
+## Action
+
+Use camelCase for function names
+
+## Evidence
+
+- Pattern in code: python_server/
+
+---
+id: super-doubao-instinct-class-naming
+trigger: "When defining a new class"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: yethikrishna/super-doubao
+---
+
+# Super Doubao Instinct Class Naming
+
+## Action
+
+Use PascalCase for class names
+
+## Evidence
+
+- Pattern in code: python_server/
+
+---
+id: super-doubao-instinct-constant-naming
+trigger: "When declaring a constant"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: yethikrishna/super-doubao
+---
+
+# Super Doubao Instinct Constant Naming
+
+## Action
+
+Use SCREAMING_SNAKE_CASE for constant names
+
+## Evidence
+
+- Pattern in code: python_server/
+
+---
+id: super-doubao-instinct-import-style
+trigger: "When importing modules within the package"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: yethikrishna/super-doubao
+---
+
+# Super Doubao Instinct Import Style
+
+## Action
+
+Use relative imports
+
+## Evidence
+
+- Pattern in code: python_server/
+
+---
+id: super-doubao-instinct-export-style
+trigger: "When exporting functions or classes"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: yethikrishna/super-doubao
+---
+
+# Super Doubao Instinct Export Style
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in code: python_server/
+
+---
+id: super-doubao-instinct-test-location
+trigger: "When adding new tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: yethikrishna/super-doubao
+---
+
+# Super Doubao Instinct Test Location
+
+## Action
+
+Place test files mixed with source files (not in a separate test directory)
+
+## Evidence
+
+- Pattern in folder structure: testLocation = mixed
+
+---
+id: super-doubao-instinct-commit-format
+trigger: "When writing a commit message"
+confidence: 0.8
+domain: git
+source: repo-analysis
+source_repo: yethikrishna/super-doubao
+---
+
+# Super Doubao Instinct Commit Format
+
+## Action
+
+Write a freeform message, no specific prefix, typically concise (~68 characters), may include multiple actions separated by commas
+
+## Evidence
+
+- Seen in commit: 'Fix 3 critical crashes, clean production noise, add tests and README'
+
